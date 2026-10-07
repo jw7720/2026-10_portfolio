@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>정지우 | Isaac Sim 디지털 트윈 · AMR·6축 로봇 시뮬레이션 엔지니어</title>
+<meta name="description" content="NVIDIA Isaac Sim 디지털 트윈·시뮬레이션 환경 구축과 AMR 자율주행, 6축 매니퓰레이터 시뮬레이션·Sim-to-Real 역량을 갖춘 로보틱스 엔지니어 정지우의 포트폴리오." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0b0f14;
+    --bg-soft: #121821;
+    --card: #161e29;
+    --card-hover: #1c2735;
+    --border: #243042;
+    --text: #e6edf3;
+    --text-dim: #9aa7b6;
+    --accent: #4dd0a7;
+    --accent-2: #5b9bff;
+    --accent-soft: rgba(77, 208, 167, 0.12);
+    --radius: 14px;
+    --maxw: 980px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  code, .mono { font-family: 'JetBrains Mono', monospace; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(11, 15, 20, 0.82);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: var(--maxw); margin: 0 auto; padding: 14px 22px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .nav-name { font-weight: 800; letter-spacing: -0.02em; }
+  .nav-links { display: flex; gap: 20px; flex-wrap: wrap; }
+  .nav-links a { color: var(--text-dim); font-size: 0.9rem; font-weight: 500; }
+  .nav-links a:hover { color: var(--accent); text-decoration: none; }
+  @media (max-width: 640px) { .nav-links { display: none; } }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 22px; }
+  section { padding: 64px 0 24px; }
+  .section-title {
+    font-size: 0.82rem; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 26px; display: flex; align-items: center; gap: 12px;
+  }
+  .section-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+  /* Hero */
+  header.hero {
+    padding: 88px 0 40px;
+    background:
+      radial-gradient(1200px 400px at 75% -10%, rgba(91,155,255,0.10), transparent),
+      radial-gradient(900px 380px at 10% 0%, rgba(77,208,167,0.10), transparent);
+  }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.1rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; }
+  .hero .role { color: var(--accent); }
+  .hero .tagline { margin-top: 18px; color: var(--text-dim); font-size: 1.08rem; max-width: 720px; }
+  .hero-meta { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip {
+    background: var(--accent-soft); color: var(--accent);
+    border: 1px solid rgba(77,208,167,0.25);
+    padding: 6px 13px; border-radius: 999px; font-size: 0.82rem; font-weight: 600;
+  }
+  .hero-contact { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 18px; color: var(--text-dim); font-size: 0.92rem; }
+  .hero-contact b { color: var(--text); font-weight: 600; }
+
+  /* About */
+  .about p { color: var(--text-dim); margin-bottom: 14px; max-width: 800px; }
+  .about ul { list-style: none; display: grid; gap: 12px; margin-top: 8px; }
+  .about li { position: relative; padding-left: 26px; color: var(--text-dim); }
+  .about li::before { content: "▹"; position: absolute; left: 0; color: var(--accent); }
+  .about li b { color: var(--text); font-weight: 600; }
+
+  /* Skills */
+  .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  @media (max-width: 720px) { .skills-grid { grid-template-columns: 1fr; } }
+  .skill-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 22px;
+  }
+  .skill-card h3 { font-size: 0.95rem; margin-bottom: 14px; color: var(--accent-2); }
+  .skill-row { display: flex; align-items: baseline; gap: 8px; padding: 6px 0; border-bottom: 1px dashed var(--border); }
+  .skill-row:last-child { border-bottom: 0; }
+  .skill-row .lv { color: var(--accent); font-family: 'JetBrains Mono'; font-size: 0.8rem; }
+  .skill-row .nm { font-weight: 600; font-size: 0.92rem; }
+  .skill-row .note { color: var(--text-dim); font-size: 0.8rem; margin-left: auto; text-align: right; }
+
+  /* Experience */
+  .exp-card {
+    background: linear-gradient(180deg, var(--card), var(--bg-soft));
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 22px 24px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+  }
+  .exp-card .co { font-size: 1.15rem; font-weight: 700; }
+  .exp-card .pos { color: var(--accent); font-weight: 600; font-size: 0.92rem; }
+  .exp-card .date { color: var(--text-dim); font-family: 'JetBrains Mono'; font-size: 0.85rem; }
+  .exp-card p { width: 100%; color: var(--text-dim); margin-top: 6px; font-size: 0.94rem; }
+
+  /* Projects */
+  .projects { display: grid; gap: 18px; }
+  .proj {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 24px; transition: 0.2s;
+  }
+  .proj:hover { background: var(--card-hover); border-color: rgba(77,208,167,0.4); transform: translateY(-2px); }
+  .proj-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .proj-num { font-family: 'JetBrains Mono'; color: var(--accent); font-weight: 600; }
+  .proj h3 { font-size: 1.18rem; font-weight: 700; letter-spacing: -0.01em; }
+  .proj .badge { font-size: 0.72rem; background: rgba(91,155,255,0.15); color: var(--accent-2); padding: 3px 9px; border-radius: 6px; font-weight: 600; }
+  .proj-date { color: var(--text-dim); font-family: 'JetBrains Mono'; font-size: 0.82rem; margin-top: 6px; }
+  .video-embed { position: relative; padding-bottom: 56.25%; height: 0; margin-top: 16px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+  .video-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+  .proj-videos { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 16px; }
+  .vid-item { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--bg-soft); }
+  .vid-item video, .vid-item img { width: 100%; display: block; background: #000; }
+  .vid-cap { font-size: 0.82rem; color: var(--text-dim); padding: 8px 12px; }
+  .vid-cap b { color: var(--text); font-weight: 600; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 14px; }
+  .tag { font-family: 'JetBrains Mono'; font-size: 0.74rem; color: var(--text-dim); background: var(--bg-soft); border: 1px solid var(--border); padding: 3px 9px; border-radius: 6px; }
+  .proj .lead { color: var(--text); font-size: 0.96rem; margin-bottom: 12px; }
+  .proj ul { list-style: none; display: grid; gap: 8px; }
+  .proj li { position: relative; padding-left: 20px; color: var(--text-dim); font-size: 0.92rem; }
+  .proj li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+  .proj li b { color: var(--text); font-weight: 600; }
+  .ph { color: var(--text-dim); font-style: italic; }
+
+  /* generic list cards */
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; }
+  .mini-card + .mini-card { margin-top: 14px; }
+  .mini-card h3 { font-size: 1.05rem; margin-bottom: 4px; }
+  .mini-card .date { color: var(--text-dim); font-family: 'JetBrains Mono'; font-size: 0.82rem; margin-bottom: 10px; }
+  .mini-card ul { list-style: none; display: grid; gap: 7px; }
+  .mini-card li { position: relative; padding-left: 18px; color: var(--text-dim); font-size: 0.9rem; }
+  .mini-card li::before { content: "▹"; position: absolute; left: 0; color: var(--accent); }
+  .sub { font-weight: 700; color: var(--accent-2); font-size: 0.9rem; margin-top: 12px; }
+
+  .certs { display: flex; flex-wrap: wrap; gap: 12px; }
+  .cert { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 18px; font-weight: 600; }
+  .cert span { color: var(--text-dim); font-family: 'JetBrains Mono'; font-size: 0.8rem; font-weight: 400; }
+
+  footer { padding: 50px 0 60px; text-align: center; color: var(--text-dim); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-name">정지우</span>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Isaac Sim 디지털 트윈 ·<br /><span class="role">AMR·6축 로봇 시뮬레이션 엔지니어</span></h1>
+    <p class="tagline">
+      실물 로봇 도입 전, NVIDIA Isaac Sim으로 디지털 트윈·시뮬레이션 환경을 구축해 주행·제어 로직을 검증하고,
+      메카넘 AMR 실물 자율주행은 물론 6축 매니퓰레이터(Dobot Nova2) 시뮬레이션과 Sim-to-Real까지 연결해 온 엔지니어입니다.
+    </p>
+    <div class="hero-meta">
+      <span class="chip">Isaac Sim 디지털 트윈</span>
+      <span class="chip">시뮬레이션 환경 구축</span>
+      <span class="chip">AMR 자율주행</span>
+      <span class="chip">6축 매니퓰레이터 시뮬레이션</span>
+      <span class="chip">Sim-to-Real</span>
+      <span class="chip">강화학습(RL)</span>
+    </div>
+    <div class="hero-contact">
+      <span><b>정지우</b> (Jiwoo Jung)</span>
+      <span>1997.08.23</span>
+    </div>
+  </div>
+</header>
+
+<section id="about" class="about">
+  <div class="wrap">
+    <div class="section-title">About Me</div>
+    <p>
+      <b style="color:var(--text)">NVIDIA Isaac Sim / Isaac Lab 기반으로 로봇 시뮬레이션·강화학습(RL)과 Sim-to-Real을 다뤄 온</b> 로보틱스 엔지니어입니다.
+      설계 파일(SolidWorks)에서 URDF·USD로 변환하고, 센서(카메라·LiDAR)·물리·controller·planner·ROS2를 연동해
+      "실물이 오기 전에 미리 돌려볼 수 있는" 시뮬레이션 환경을 구성합니다.
+      바퀴형 AMR(메카넘·지게차)과 6축 매니퓰레이터(Dobot Nova2)를 Isaac Sim으로 다뤘고,
+      메카넘 AMR 실물 자율주행과 시뮬레이션 동작을 실물로 옮기는 Sim-to-Real, 그리고 현재
+      <b style="color:var(--text)">4축 로봇 카메라 캘리브레이션 &amp; 강화학습(Isaac Lab)</b>을 진행하고 있습니다.
+    </p>
+    <ul>
+      <li><b>Isaac Sim 시뮬레이션 환경 구축</b>에 강점 — 설계→URDF→USD 변환, 센서·물리·제어·ROS2 연동으로 실물 도입 전 검증 환경을 구현.</li>
+      <li><b>AMR(메카넘·지게차)</b>과 <b>6축 매니퓰레이터(Dobot Nova2)</b>를 모두 Isaac Sim으로 구축·검증한 경험.</li>
+      <li>자율주행 스택(SLAM · Nav2 · 경로 계획 · 도킹)을 시뮬레이션과 <b>실물 AMR</b> 양쪽에서 구현·적용.</li>
+      <li><b>Sim-to-Real</b> — 시뮬레이션에서 검증한 동작을 커스텀 ROS2 브리지로 실물 로봇(AMR·매니퓰레이터)에 연동.</li>
+      <li>현재 <b>Isaac Lab 기반 4축 로봇 강화학습(RL)·카메라 캘리브레이션</b>을 진행하며 학습 기반 제어로 역량 확장 중.</li>
+      <li>데이터 분석(EDA·통계·머신러닝) 배경으로 센서 데이터·결과를 정량 분석·검증.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-title">Skills</div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3>Robotics Simulation</h3>
+        <div class="skill-row"><span class="lv">◎</span><span class="nm">NVIDIA Isaac Sim</span><span class="note">디지털 트윈·물리/센서·ROS2 브리지</span></div>
+        <div class="skill-row"><span class="lv">◎</span><span class="nm">USD (OpenUSD)</span><span class="note">에셋 관리·pxr 스크립팅</span></div>
+        <div class="skill-row"><span class="lv">◎</span><span class="nm">URDF ↔ USD 변환</span><span class="note">SolidWorks→URDF→USD</span></div>
+        <div class="skill-row"><span class="lv">○</span><span class="nm">Isaac Lab / Gym</span><span class="note">로봇 RL 테스트 진행 중</span></div>
+      </div>
+      <div class="skill-card">
+        <h3>Robot Software</h3>
+        <div class="skill-row"><span class="lv">◎</span><span class="nm">로봇 노드·통신 구현</span><span class="note">ROS2(Humble)·launch·TF</span></div>
+        <div class="skill-row"><span class="lv">◎</span><span class="nm">자율주행 (경로 계획·주행)</span><span class="note">목적지·웨이포인트 주행 · Nav2</span></div>
+        <div class="skill-row"><span class="lv">◎</span><span class="nm">지도 작성·위치 추정 (SLAM)</span><span class="note">매핑·루프 클로저·로컬라이제이션</span></div>
+        <div class="skill-row"><span class="lv">○</span><span class="nm">경로 추종·충돌 회피</span><span class="note">장애물 회피 모션 계획</span></div>
+        <div class="skill-row"><span class="lv">○</span><span class="nm">로봇 팔 제어</span><span class="note">매니퓰레이터 모션 제어 · MoveIt</span></div>
+      </div>
+      <div class="skill-card">
+        <h3>Languages / Tools</h3>
+        <div class="skill-row"><span class="lv">◎</span><span class="nm">Python</span><span class="note"></span></div>
+        <div class="skill-row"><span class="lv">○</span><span class="nm">C++</span><span class="note">ROS2 노드·TCP 소켓 서버</span></div>
+        <div class="skill-row"><span class="lv">◎</span><span class="nm">Linux / Docker</span><span class="note">Jetson(L4T)·컨테이너 배포</span></div>
+        <div class="skill-row"><span class="lv">◎</span><span class="nm">Git / Git LFS</span><span class="note"></span></div>
+        <div class="skill-row"><span class="lv">○</span><span class="nm">데이터 분석</span><span class="note">Pandas·scikit-learn</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-title">Work Experience</div>
+    <div class="exp-card">
+      <div>
+        <div class="co">(주)에이아이코리아 <span class="pos">· R&amp;D S/W 연구원</span></div>
+      </div>
+      <div class="date">2025.07 ~ 재직 중</div>
+      <p>AMR(메카넘·지게차)·매니퓰레이터의 <b style="color:var(--text)">Isaac Sim 디지털 트윈·시뮬레이션 환경 구축</b>과 실물 AMR 자율주행·Sim-to-Real 개발 담당. 아래 프로젝트가 실무 수행 내역입니다.</p>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-title">Projects</div>
+    <div class="projects">
+
+      <div class="proj">
+        <div class="proj-head"><span class="proj-num">01</span><h3>협동로봇 실링(Sealant) 자동화 — 레이저 스캔 → cuRobo 경로 생성 → 실기 도포</h3><span class="badge">Sim-to-Real</span></div>
+        <div class="proj-date">📅 2026.08 ~ 진행 중</div>
+        <div class="tags"><span class="tag">Isaac Sim</span><span class="tag">cuRobo</span><span class="tag">RB16-900E</span><span class="tag">Line Scanner</span><span class="tag">Pneumatic Control</span><span class="tag">Python</span></div>
+        <p class="lead">시편 스캔부터 실제 로봇 도포까지 이어지는 협동로봇 실링 자동화 프로세스를 구축했습니다.</p>
+        <ul>
+          <li><b>전체 공정</b>: 시편을 라인 스캐너로 스캔 → 데이터를 Isaac Sim에 업로드 → 실링 경로 생성 → cuRobo 알고리즘으로 충돌 회피 경로 생성 → 실제 로봇 구동으로 이어지는 프로세스를 구현했습니다.</li>
+          <li><b>통합 제어</b>: 공압 장치와 실링 토출기부터 라인 스캐너, Isaac Sim, cuRobo, 실제 로봇까지 직접 설정·연동하고 하나의 프로세스에서 제어할 수 있도록 구성했습니다.</li>
+        </ul>
+      </div>
+
+
+      <div class="proj">
+        <div class="proj-head"><span class="proj-num">02</span><h3>LiDAR 가상 센서 구현 및 드론 탐지 검증</h3><span class="badge">Sensor Simulation</span></div>
+        <div class="proj-date">📅 2026.09</div>
+        <div class="tags"><span class="tag">Isaac Sim</span><span class="tag">RTX LiDAR</span><span class="tag">Point Cloud</span><span class="tag">Python</span></div>
+        <p class="lead">Isaac Sim RTX LiDAR로 전방 섹터형 가상 센서를 구성하고, 거리와 자세에 따른 소형 드론 탐지 성능을 검증했습니다.</p>
+        <ul>
+          <li><b>가상 센서 구성</b>: 공개 제원을 바탕으로 LiDAR 모델을 구현하고 기준 센서와 비교했습니다.</li>
+          <li><b>탐지 검증</b>: 거리·자세 조건별 테스트를 자동화해 포인트클라우드와 RGB 데이터를 수집했습니다.</li>
+        </ul>
+      </div>
+
+
+      <div class="proj">
+        <div class="proj-head"><span class="proj-num">03</span><h3>로봇 카메라 캘리브레이션 &amp; 4축 로봇 강화학습</h3><span class="badge">진행 중</span></div>
+        <div class="proj-date">📅 2026.06 ~ 진행 중</div>
+        <div class="tags"><span class="tag">Isaac Lab</span><span class="tag">Isaac Sim</span><span class="tag">RL</span><span class="tag">Camera Calibration</span><span class="tag">Mixed Palletizing</span><span class="tag">Python</span></div>
+        <p class="lead">카메라 캘리브레이션으로 비전-로봇 좌표를 정합하고, Mixed Palletizing(혼적 적재)용 4축 산업용 로봇을 Isaac Lab에서 강화학습(RL) 기반 동작으로 학습·검증하는 파이프라인을 구축 중.</p>
+        <ul>
+          <li><b>카메라 캘리브레이션</b>: 비전 좌표 ↔ 로봇 좌표 정합을 수행.</li>
+          <li><b>비전 기반 파지(grasp)</b>: RGB-D 카메라 인식으로 물체를 인식·파지하는 동작을 시뮬레이션에서 검증.</li>
+          <li><b>RL 환경/학습</b>: 4축 로봇을 대상으로 Isaac Lab 시뮬레이션 환경에서 강화학습(RL) 기반 동작을 학습·테스트.</li>
+          <li><b>의의</b>: 시뮬레이션 기반 로봇 학습과 AI 모델을 로봇 제어에 적용하는 역량으로 확장.</li>
+        </ul>
+      </div>
+
+      <div class="proj">
+        <div class="proj-head"><span class="proj-num">04</span><h3>Isaac Sim 지게차(Forklift) AMR 주행 테스트 환경 구축</h3></div>
+        <div class="proj-date">📅 2026.01 ~ 2026.06</div>
+        <div class="tags"><span class="tag">Isaac Sim</span><span class="tag">USD</span><span class="tag">URDF</span><span class="tag">ROS2</span><span class="tag">Nav2</span></div>
+        <p class="lead">실물 지게차 제작·도입 전에 업체의 실제 창고를 Isaac Sim에 재현해 자율주행·정밀 도킹까지 완성하고, 검증된 ROS2 스택을 실물 지게차로 그대로 이관하는 것을 목표로 한 프로젝트. USD·URDF 제작부터 주행·도킹까지 거의 단독으로 파이프라인을 구축.</p>
+        <ul>
+          <li><b>USD·URDF 제작 (단독)</b>: SolidWorks 설계 → URDF → USD 변환으로 지게차 모델을 제작하고, 업체 <b>실제 공장 규모를 Isaac Sim 창고 씬으로 1:1 구현</b>. USD 에셋은 OpenUSD(pxr)·Git LFS로 버전관리.</li>
+          <li><b>SLAM·측위</b>: ZED 카메라 기반 RTAB-Map SLAM으로 창고 mapping을 생성하고, EKF(robot_localization)로 휠 odometry와 센서를 융합해 위치 추정 안정성을 확보.</li>
+          <li><b>자율주행</b>: Nav2에서 전역 경로는 Smac Planner, 지역 경로는 TEB(Timed Elastic Band) local planner로 구성. 후륜 조향 지게차 특성에 맞춘 Ackermann 제약 behavior tree를 적용·튜닝.</li>
+          <li><b>정밀 도킹</b>: opennav_docking 기반 커스텀 도킹 플러그인을 직접 구현해 AprilTag로 도킹 스테이션을 인식→접근→정렬하는 정밀 도킹까지 완료.</li>
+          <li><b>관제 연동</b>: amr_bridge(WebSocket)로 관제 UI ↔ 관제 Backend ↔ AMR Backend(ROS2) ↔ Isaac Sim/실물 지게차의 4-Tier 관제 아키텍처를 구성.</li>
+        </ul>
+        <div class="proj-videos">
+          <div class="vid-item">
+            <video src="videos/forklift-env.mp4" controls preload="metadata" playsinline muted></video>
+            <div class="vid-cap"><b>Isaac Sim 창고 환경 구성</b></div>
+          </div>
+          <div class="vid-item">
+            <video src="videos/forklift-nav2-driving.mp4" controls preload="metadata" playsinline muted></video>
+            <div class="vid-cap"><b>Nav2 자율주행</b></div>
+          </div>
+          <div class="vid-item">
+            <video src="videos/forklift-rviz2.mp4" controls preload="metadata" playsinline muted></video>
+            <div class="vid-cap"><b>RViz2 주행 모니터링</b></div>
+          </div>
+          <div class="vid-item">
+            <video src="videos/forklift-fork-ramp.mp4" controls preload="metadata" playsinline muted></video>
+            <div class="vid-cap"><b>오르막길 주행 &amp; 포크 하강</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-head"><span class="proj-num">05</span><h3>Dobot Nova2 매니퓰레이터 — 디지털 트윈 &amp; Sim-to-Real</h3><span class="badge">Sim-to-Real</span></div>
+        <div class="proj-date">📅 2026.01 ~ 2026.04</div>
+        <div class="tags"><span class="tag">Isaac Sim</span><span class="tag">Dobot Nova2</span><span class="tag">USD</span><span class="tag">URDF</span><span class="tag">ROS2</span><span class="tag">MoveIt</span><span class="tag">Sim-to-Real</span></div>
+        <p class="lead">6축 매니퓰레이터 Dobot Nova2를 Isaac Sim 디지털 트윈으로 구축하고, 커스텀 ROS2 브리지로 가상·실물을 동시에 구동하는 Sim-to-Real 구조를 단독으로 구현한 프로젝트.</p>
+        <ul>
+          <li><b>USD·URDF 직접 제작</b>: Nova2 로봇을 URDF로, 작업대·박스 등 환경을 USD로 직접 제작해 Isaac Sim 씬을 구성하고, 관절·그리퍼를 ROS2 토픽으로 제어할 수 있도록 연결.</li>
+          <li><b>디지털 트윈 동작 연동</b>: 구성한 Isaac Sim 씬을 실물 Nova2와 ROS2로 연동해, 시뮬레이션 명령대로 가상·실물이 동일하게 움직이는 단계까지 구현·검증. (이후 적재 순서·placeability 등 팔레타이징 판정 로직은 별도 담당자가 진행)</li>
+          <li><b>Sim-to-Real 브리지 개발(단독)</b>: ROS2 → Isaac Sim → 실물 Nova2 명령 흐름을 설계하고 커스텀 브리지 패키지(nova2_real_bridge)를 직접 개발. MoveIt 명령을 가상(Isaac Sim)과 실물에 동시에 전달하고 JointState로 양방향 동기화하는 launch를 구성.</li>
+          <li><b>의의</b>: 매니퓰레이터 동작을 디지털 트윈에서 사전 검증하고 동일 명령으로 가상·실물을 동시 구동하는 Sim-to-Real 워크플로우를 USD·URDF 제작부터 브리지까지 단독으로 구현.</li>
+        </ul>
+        <div class="proj-videos">
+          <div class="vid-item">
+            <video src="videos/nova2-grasp.mp4" controls preload="metadata" playsinline muted></video>
+            <div class="vid-cap"><b>Nova2 비전 기반 파지 시뮬레이션</b></div>
+          </div>
+          <div class="vid-item">
+            <img src="videos/nova2-grasp-planning.png" alt="Nova2 비전 인식·파지 계획">
+            <div class="vid-cap"><b>비전 인식 · 파지 계획 (Isaac Sim)</b></div>
+          </div>
+          <div class="vid-item">
+            <video src="videos/nova2-digitaltwin-test.mp4" controls preload="metadata" playsinline muted></video>
+            <div class="vid-cap"><b>디지털 트윈 기초 테스트</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-head"><span class="proj-num">06</span><h3>Mecanum Wheel AMR — Isaac Sim 시뮬레이션 + 실물 자율주행</h3><span class="badge">Sim-to-Real</span></div>
+        <div class="proj-date">📅 2025.10 ~ 2026.01</div>
+        <div class="tags"><span class="tag">Isaac Sim</span><span class="tag">USD</span><span class="tag">URDF</span><span class="tag">ROS2</span><span class="tag">Nav2</span><span class="tag">SLAM</span><span class="tag">SAM</span><span class="tag">ZED</span><span class="tag">Odometry</span></div>
+        <p class="lead">메카넘 휠 AMR을 Isaac Sim에서 구현해 실물 주행 전 문제 요소를 사전 점검하고, 시뮬레이션에서 완성한 코드를 실물로 이관해 자율주행까지 완료한 프로젝트.</p>
+        <ul>
+          <li><b>시뮬레이션 환경 구축</b>: 설계 → URDF → USD 변환으로 메카넘 휠이 물리적으로 구르는 Isaac Sim 환경을 구현하고, ROS2로 카메라·LiDAR를 연동해 자율주행 시뮬레이션을 구성. 실물 주행 전 카메라·동작 구동·주행 시나리오를 사전 점검.</li>
+          <li><b>스테레오 depth 파이프라인</b>: Isaac Sim 스테레오 카메라를 입력받는 ROS2 패키지를 구현 — 좌·우 영상 → S2M2(스테레오 매칭 depth 추정) → disparity/depth → PointCloud2 변환·시각화까지의 흐름을 구성.</li>
+          <li><b>인식 연구</b>: 위 depth·포인트클라우드와 SAM 계열(세그멘테이션)을 결합해 장애물 탐지를 최종 목표로 연구. 실물은 ZED(zed-ros2-wrapper) 스테레오 입력을 사용.</li>
+          <li><b>실물 자율주행(Sim-to-Real)</b>: 실물 메카넘 AMR에서 ROS2 연동, 사람 탐지 알고리즘 파라미터 튜닝, Isaac Sim에서 작성한 코드를 실물로 이식해 자율주행을 직접 완료. 측위·주행은 카메라 기반 odometry·SLAM·Nav2로 구성.</li>
+        </ul>
+        <div class="proj-videos">
+          <div class="vid-item">
+            <video src="videos/mecanum-isaacsim.mp4" controls preload="metadata" playsinline muted></video>
+            <div class="vid-cap"><b>Isaac Sim 시뮬레이션 주행</b></div>
+          </div>
+          <div class="vid-item">
+            <video src="videos/mecanum-sim.mp4" controls preload="metadata" playsinline muted></video>
+            <div class="vid-cap"><b>실물 메카넘 AMR 주행 (창고)</b></div>
+          </div>
+          <div class="vid-item">
+            <video src="videos/mecanum-start-view.mp4" controls preload="metadata" playsinline muted></video>
+            <div class="vid-cap"><b>실물 메카넘 AMR 주행 (전시회)</b></div>
+          </div>
+          <div class="vid-item">
+            <video src="videos/mecanum-second-view.mp4" controls preload="metadata" playsinline muted></video>
+            <div class="vid-cap"><b>실물 주행 — 다른 시점</b></div>
+          </div>
+          <div class="vid-item">
+            <video src="videos/mecanum-main-pc.mp4" controls preload="metadata" playsinline muted></video>
+            <div class="vid-cap"><b>관제 PC 화면</b></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="section-title">Education &amp; Activities</div>
+
+    <div class="mini-card">
+      <h3>두산로보틱스 부트캠프 1기 (ROKEY)</h3>
+      <div class="date">2024.06 ~ 2025.01 · 경남테크노파크 주관</div>
+      <div class="sub">① 다중 로봇 시뮬레이션 &amp; URDF 모델링 (Gazebo · RViz2 · URDF · ROS2)</div>
+      <ul><li>URDF로 형상·TF 모델링, Gazebo에서 다중 TurtleBot 멀티로봇 시뮬레이션 구성 및 통합 launch 설계.</li></ul>
+      <div class="sub">② 실내 자율주행 SLAM (ROS2 · SLAM · Nav2 · TurtleBot4)</div>
+      <ul><li>실내 지도 작성, 자동 탐색(explore) 및 목적지 자율주행 구현, PointCloud 기반 측위·주행 적용.</li></ul>
+      <div class="sub">③ AI 비전 객체 인식 &amp; 추적 (YOLOv8 · OpenCV)</div>
+      <ul><li>라벨링→학습→추론 전 과정 수행, 객체 추적(침입자 추적)·컨베이어 불량 검출 모델을 confusion matrix로 정량 평가·최적화.</li></ul>
+      <div class="sub">④ 협동로봇 제어 &amp; 서비스 로봇 (Doosan Robot2 · 매니퓰레이터)</div>
+      <ul><li>두산 협동로봇 2대 협업 제어, ArUco+캘리브레이션 기반 풀필먼트(피킹), 주문 DB 연동 식당 서비스 로봇 구현.</li></ul>
+    </div>
+
+    <div class="mini-card">
+      <h3>스마트 물류 운영관리</h3>
+      <div class="date">2024.06 ~ 2024.11</div>
+      <ul><li>데이터 분석 환경 구축, 통계·시계열 분석, 최적해 탐색 기법 학습.</li></ul>
+    </div>
+
+    <div class="mini-card">
+      <h3>학부 연구생 — 전기도금공정 불량품 검정</h3>
+      <div class="date">2023.06 ~ 2023.12 · 협력업체 (주)KNIC</div>
+      <ul>
+        <li>양품/불량품 차이를 보이는 공정 변수 식별 위한 EDA, 결측치·이상치 탐지 수행.</li>
+        <li>공정 변수 간 상관 분석 및 주성분 분석(PCA)으로 핵심 변수 도출.</li>
+        <li>불량 판별 머신러닝 모델 설계.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    © 2026 정지우 (Jiwoo Jung)
+  </div>
+</footer>
+
+</body>
+</html>
